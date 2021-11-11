@@ -68,7 +68,6 @@ class _LoginForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 200,
       width: double.infinity,
       child: Form(
         child: Column(
@@ -76,7 +75,38 @@ class _LoginForm extends StatelessWidget {
             TextFormField(
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
-              decoration: InputDecorations.loginInputDecoration()
+              decoration: InputDecorations.loginInputDecoration(
+                hintText: 'rick@itlooksfake.com',
+                labelText: 'Email address',
+                prefixIcon: Icons.alternate_email
+              )
+            ),
+            const SizedBox(height: 30),
+            TextFormField(
+              autocorrect: false,
+              obscureText: true,
+              decoration: InputDecorations.loginInputDecoration(
+                hintText: '*******',
+                labelText: 'Password',
+                prefixIcon: Icons.lock_outline
+              )
+            ),
+            const SizedBox(height: 30),
+            MaterialButton(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              disabledColor: Colors.grey,
+              elevation: 0,
+              color: Colors.deepPurple,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
+                child: const Text(
+                  'Login',
+                  style: TextStyle(
+                    color: Colors.white
+                  ),
+                ),
+              ),
+              onPressed: () {},
             )
           ]
         )

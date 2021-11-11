@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:form_design/widgets/custom_form.dart';
+import 'package:form_design/widgets/user_icon.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({ Key? key }) : super(key: key);
@@ -6,33 +8,13 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-
     return Scaffold(
       body: Stack(
         children: [
           _Background(size: size),
-          const _CustomForm(),
+          const UserIcon(),
+          const CustomForm(),
         ],
-      ),
-    );
-  }
-}
-
-class _CustomForm extends StatelessWidget {
-  const _CustomForm({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: Colors.white
-        ),
-        height: 370,
-        width: 300,
       ),
     );
   }

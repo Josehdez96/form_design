@@ -70,6 +70,7 @@ class _LoginForm extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: Form(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Column(
           children: [
             TextFormField(
@@ -79,7 +80,14 @@ class _LoginForm extends StatelessWidget {
                 hintText: 'rick@itlooksfake.com',
                 labelText: 'Email address',
                 prefixIcon: Icons.alternate_email
-              )
+              ),
+              validator: (value) {
+                String pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                RegExp regExp  = RegExp(pattern);
+                return regExp.hasMatch(value ?? '')
+                  ? null
+                  : 'Entered value is not an email';
+              },
             ),
             const SizedBox(height: 30),
             TextFormField(
@@ -89,7 +97,11 @@ class _LoginForm extends StatelessWidget {
                 hintText: '*******',
                 labelText: 'Password',
                 prefixIcon: Icons.lock_outline
-              )
+              ),
+              validator: (value) {
+                if (value != null && value.length >= 6) return null;
+                return 'Password should be at least 6 characters';
+              },
             ),
             const SizedBox(height: 30),
             MaterialButton(

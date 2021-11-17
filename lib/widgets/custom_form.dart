@@ -49,16 +49,16 @@ class CustomForm extends StatelessWidget {
 
   BoxDecoration _createCardShape() {
     return BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: Colors.white,
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 15,
-                  offset: Offset(0, 5)
-                )
-              ]
-            );
+      borderRadius: BorderRadius.circular(20),
+      color: Colors.white,
+      boxShadow: const [
+        BoxShadow(
+          color: Colors.black12,
+          blurRadius: 15,
+          offset: Offset(0, 5)
+        )
+      ]
+    );
   }
 }
 
@@ -70,6 +70,7 @@ class _LoginForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final loginFormProvider = Provider.of<LoginFormProvider>(context);
+
     return SizedBox(
       width: double.infinity,
       child: Form(
@@ -117,18 +118,26 @@ class _LoginForm extends StatelessWidget {
               color: Colors.deepPurple,
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
-                child: const Text(
-                  'Login',
-                  style: TextStyle(
+                child: Text(
+                  loginFormProvider.isLoading
+                  ? 'Wait'
+                  : 'Login',
+                  style: const TextStyle(
                     color: Colors.white
                   ),
                 ),
               ),
-              onPressed: () {
-                if (!loginFormProvider.isValidForm()) return;
-
-                //Navigator.pushReplacementName(context, routeName)
-              },
+              onPressed: loginFormProvider.isLoading
+                ? null
+                : () async {
+                  FocusScope.of(context).unfocus();
+                  if (!loginFormProvider.isValidForm()) return;
+                  
+                  loginFormProvider.isLoading = true;
+                  Future.delayed(const Duration(seconds: 2));
+                  loginFormProvider.isLoading = false;
+                  //Navigator.pushReplacementName(context, routeName)
+                },
             )
           ]
         )

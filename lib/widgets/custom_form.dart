@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:form_design/providers/login_form_provider.dart';
 import 'package:form_design/ui/input_decorations.dart';
+import 'package:provider/provider.dart';
 
 class CustomForm extends StatelessWidget {
 
@@ -67,9 +69,11 @@ class _LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loginFormProvider = Provider.of<LoginFormProvider>(context);
     return SizedBox(
       width: double.infinity,
       child: Form(
+        key: loginFormProvider.formKey,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Column(
           children: [
@@ -81,6 +85,7 @@ class _LoginForm extends StatelessWidget {
                 labelText: 'Email address',
                 prefixIcon: Icons.alternate_email
               ),
+              onChanged: (value) => loginFormProvider.email = value,
               validator: (value) {
                 String pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
                 RegExp regExp  = RegExp(pattern);
@@ -98,6 +103,7 @@ class _LoginForm extends StatelessWidget {
                 labelText: 'Password',
                 prefixIcon: Icons.lock_outline
               ),
+              onChanged: (value) => loginFormProvider.password = value,
               validator: (value) {
                 if (value != null && value.length >= 6) return null;
                 return 'Password should be at least 6 characters';
@@ -118,7 +124,11 @@ class _LoginForm extends StatelessWidget {
                   ),
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                if (!loginFormProvider.isValidForm()) return;
+
+                //Navigator.pushReplacementName(context, routeName)
+              },
             )
           ]
         )

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:form_design/providers/login_form_provider.dart';
 import 'package:form_design/widgets/custom_form.dart';
 import 'package:form_design/widgets/user_icon.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({ Key? key }) : super(key: key);
@@ -13,7 +15,10 @@ class LoginScreen extends StatelessWidget {
         children: [
           _Background(size: size),
           const UserIcon(),
-          const CustomForm(),
+          ChangeNotifierProvider(
+            create: ( _ ) => LoginFormProvider(),
+            child: const CustomForm(),
+          )
         ],
       ),
     );
